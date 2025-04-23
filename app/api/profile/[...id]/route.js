@@ -32,7 +32,17 @@ export async function GET(request, { params }) {
         console.error("Error fetching user:", error);
         return new Response(JSON.stringify({ error: "Internal Server Error" }), {
             status: 500,
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                ...corsHeaders(),
+                "Content-Type": "application/json"
+            },
         });
     }
+}
+function corsHeaders() {
+    return {
+        "Access-Control-Allow-Origin": "*", // Or replace * with a specific origin like 'http://localhost:3000'
+        "Access-Control-Allow-Methods": "GET,OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    };
 }
